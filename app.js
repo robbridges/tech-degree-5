@@ -32,13 +32,14 @@ const displayUserData = (user) => {
   </div>`
   gallery.insertAdjacentHTML('beforeend', html);
 }
+
 /*
 Sets up the event listeners on all the user divs created, this is how we get a modal to display when a user is clicked on.
 */
-const eventListener = () => {
+const addEventListener = (array) => {
   const divs = document.querySelectorAll('.card');
   divs.forEach((div,index) => div.addEventListener('click', e => {
-    setUpModel(users[index]);
+    setUpModel(array[index]);
   }))
 }
   
@@ -75,10 +76,14 @@ modelButtonListeners();
 Sets up event listeners for all modal objects, we call this method after the modal has been created
 */
 const modelButtonListeners = () => {
-  const closeButton = document.querySelector('.modal-close-btn')
-  closeButton.addEventListener('click', e=> {
+  const closeButtons = document.querySelectorAll('.modal-close-btn')
+  closeButtons.forEach( closeButton => {
+    closeButton.addEventListener('click', e=> {
     document.querySelector('.modal-container').remove();
-  })
+  })})
+  // closeButton.addEventListener('click', e=> {
+  //   document.querySelector('.modal-container').remove();
+  // })
 }
 
 const addSearchBar = () => {
@@ -94,11 +99,13 @@ const addSearchBar = () => {
 Method that sets up our event listeners and adds the search bar to the page 
 */
 const pageSetUp = () => {
-  eventListener();
+  addEventListener(users);
   addSearchBar();
   search();
 }
-
+/*
+Our search method, sorts through the employee by name return only the results if they match, also adding the model and event listeners to our new data set
+*/
 const search = () => {
   console.log(users);
   const searchBar = document.querySelector('.search-input');
@@ -113,7 +120,12 @@ const search = () => {
     })
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => card.remove());
-    userArray.forEach(user => displayUserData(user));
+    userArray.forEach(user => {
+      displayUserData(user);
+    });
+    addEventListener(userArray);
+    
+    
 
   }
   searchButton.addEventListener('click', e => {
