@@ -96,6 +96,32 @@ Method that sets up our event listeners and adds the search bar to the page
 const pageSetUp = () => {
   eventListener();
   addSearchBar();
+  search();
+}
+
+const search = () => {
+  console.log(users);
+  const searchBar = document.querySelector('.search-input');
+  const searchButton = document.querySelector('.search-submit');
+  const searchText = searchBar.value;
+  const filteredUser = [];
+  users.forEach(user => {
+    if (user.name.first.toLowerCase().includes(searchText.toLowerCase())) {
+      filteredUser.push(user);
+    }
+  })
+  console.log(filteredUser);
+  
+    
+  
+}
+
+const searchEventListener = () => {
+  const searchButton = document.querySelector('.search-submit');
+  searchButton.addEventListener('click', e => {
+    search();
+  })
+
 }
 
 
