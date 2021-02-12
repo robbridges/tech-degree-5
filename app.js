@@ -103,26 +103,29 @@ const search = () => {
   console.log(users);
   const searchBar = document.querySelector('.search-input');
   const searchButton = document.querySelector('.search-submit');
-  const searchText = searchBar.value;
-  const filteredUser = [];
-  users.forEach(user => {
-    if (user.name.first.toLowerCase().includes(searchText.toLowerCase())) {
-      filteredUser.push(user);
-    }
-  })
-  console.log(filteredUser);
-  
-    
-  
-}
+  const userSearch = () => {
+    const searchText= searchBar.value;
+    userArray = [];
+    users.forEach(user => {
+      if (user.name.first.toLowerCase().includes(searchText.toLowerCase()) || user.name.last.toLowerCase().includes(searchText.toLowerCase())) {
+        userArray.push(user);
+      }
+    })
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => card.remove());
+    userArray.forEach(user => displayUserData(user));
 
-const searchEventListener = () => {
-  const searchButton = document.querySelector('.search-submit');
+  }
   searchButton.addEventListener('click', e => {
-    search();
+    e.preventDefault();
+    userSearch();
   })
-
+  searchBar.addEventListener('keyup', e => {
+    userSearch();
+  })
 }
+
+
 
 
 
