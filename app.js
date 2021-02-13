@@ -44,6 +44,8 @@ const applyModals = (array) => {
   }))
 
 }
+
+
   
 /*
 Setting up the model to display for more user information This sets up the HTML when the onclick event is performed on our user divs. Creates modal button features.
@@ -73,6 +75,14 @@ const setUpModal = (user) => {
 </div>`
 gallery.insertAdjacentHTML("beforeend", html);
 modelButtonListeners();
+if (user === users[0]) {
+   const button = document.querySelector('#modal-prev');
+   button.remove();
+}
+if (user === users[11]) {
+  const button =document.querySelector('#modal-next'); 
+  button.remove();
+}
 }
 
 
@@ -93,30 +103,56 @@ const phoneFormatter = (phone) => {
   const regex = /^(\(\d{3}\))-(\d{3})-(\d{4})$/
   return phone.replace(regex, '$1 $2-$3')
 }
-console.log(phoneFormatter('(681)-011-6030'))
 
 /*
 Sets up event listeners for all modal objects, we call this method after the modal has been created
 */
 const modelButtonListeners = () => {
+  
   const closeButtons = document.querySelectorAll('.modal-close-btn');
-  const modalNextButton = document.querySelectorAll('.modal-next btn');
-  const modalPreviousButton = document.querySelectorAll('.modal-prev btn');
+  const modalNextButtons = document.querySelectorAll('#modal-next');
+  const modalPreviousButtons = document.querySelectorAll('#modal-prev');
+  const divs = document.querySelectorAll('.card');
   closeButtons.forEach( closeButton => {
     closeButton.addEventListener('click', e=> {
       document.querySelector('.modal-container').remove();
-  })})
-
+      
+  })});
   
- 
+  modalNextButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const thisuserEmail = (document.querySelector('.modal-text').textContent);
+      users.forEach((user, index) => {
+        if (user.email === thisuserEmail) {
+          document.querySelector('.modal-container').remove();
+          setUpModal(users[index + 1]);
+          }
+      })
+    })
+  })
+  
+  
+  modalPreviousButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      
+      const thisuserEmail = (document.querySelector('.modal-text').textContent);
+      users.forEach((user, index) => {
+        if (user.email === thisuserEmail) {
+          document.querySelector('.modal-container').remove();
+          setUpModal(users[index - 1]);
+          }
+      })
+    })
+  })
+
 }
 
 const addSearchBar = () => {
   const searchBar = document.querySelector('.search-container');
   const searchHtml = `
   <form action="#" method="get">
-                            <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
   </form>`
   searchBar.insertAdjacentHTML('beforeend', searchHtml);
 }
@@ -134,7 +170,6 @@ const pageSetUp = () => {
 Our search method, sorts through the employee by name return only the results if they match, also adding the model and event listeners to our new data set
 */
 const search = () => {
-  console.log(users);
   const searchBar = document.querySelector('.search-input');
   const searchButton = document.querySelector('.search-submit');
   const userSearch = () => {
