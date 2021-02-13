@@ -36,18 +36,20 @@ const displayUserData = (user) => {
 /*
 Sets up the event listeners on all the user divs created, this is how we get a modal to display when a user is clicked on.
 */
-const addEventListener = (array) => {
+const applyModals = (array) => {
+  
   const divs = document.querySelectorAll('.card');
   divs.forEach((div,index) => div.addEventListener('click', e => {
-    setUpModel(array[index]);
+    setUpModal(array[index]);
   }))
+
 }
   
 /*
 Setting up the model to display for more user information This sets up the HTML when the onclick event is performed on our user divs. Creates modal button features.
 @Param user {object} object contained in our user array 
 */
-const setUpModel = (user) => {
+const setUpModal = (user) => {
   const gallery = document.querySelector('.gallery');
   const html = `<div class="modal-container">
   <div class="modal">
@@ -58,9 +60,9 @@ const setUpModel = (user) => {
           <p class="modal-text">${user.email}</p>
           <p class="modal-text cap">${user.location.city}</p>
           <hr>
-          <p class="modal-text">${user.phone}</p>
+          <p class="modal-text">${phoneFormatter(user.phone)}</p>
           <p class="modal-text">${user.location.street.number} ${user.location.street.name}. <br> ${user.location.city}, ${user.location.state} 97204</p>
-          <p class="modal-text">${user.dob.date}</p>
+          <p class="modal-text">Birthday: ${dobFormatter(user.dob.date)}</p>
       </div>
   </div>
 
@@ -72,18 +74,41 @@ const setUpModel = (user) => {
 gallery.insertAdjacentHTML("beforeend", html);
 modelButtonListeners();
 }
+
+
+/*
+Reformats DOB object to MM/DD/YYYY
+@Param dob {string} string to be formatted into DOB format
+*/
+const dobFormatter = (dob) => {
+  const regex = /^(\d{4})-(\d{2})-(\d{2})$/
+  const formattedString = dob.substr(0,10);
+  return formattedString.replace(regex, '$2/$3/$1')
+}
+/*
+Reformats Phone # to be in format (111) 111-1111
+@Param phone {string} String object to be reformatted
+*/
+const phoneFormatter = (phone) => {
+  const regex = /^(\(\d{3}\))-(\d{3})-(\d{4})$/
+  return phone.replace(regex, '$1 $2-$3')
+}
+console.log(phoneFormatter('(681)-011-6030'))
+
 /*
 Sets up event listeners for all modal objects, we call this method after the modal has been created
 */
 const modelButtonListeners = () => {
-  const closeButtons = document.querySelectorAll('.modal-close-btn')
+  const closeButtons = document.querySelectorAll('.modal-close-btn');
+  const modalNextButton = document.querySelectorAll('.modal-next btn');
+  const modalPreviousButton = document.querySelectorAll('.modal-prev btn');
   closeButtons.forEach( closeButton => {
     closeButton.addEventListener('click', e=> {
-    document.querySelector('.modal-container').remove();
+      document.querySelector('.modal-container').remove();
   })})
-  // closeButton.addEventListener('click', e=> {
-  //   document.querySelector('.modal-container').remove();
-  // })
+
+  
+ 
 }
 
 const addSearchBar = () => {
@@ -99,10 +124,12 @@ const addSearchBar = () => {
 Method that sets up our event listeners and adds the search bar to the page 
 */
 const pageSetUp = () => {
-  addEventListener(users);
+  applyModals(users);
   addSearchBar();
   search();
 }
+
+
 /*
 Our search method, sorts through the employee by name return only the results if they match, also adding the model and event listeners to our new data set
 */
@@ -123,7 +150,7 @@ const search = () => {
     userArray.forEach(user => {
       displayUserData(user);
     });
-    addEventListener(userArray);
+    applyModals(userArray);
     
     
 
