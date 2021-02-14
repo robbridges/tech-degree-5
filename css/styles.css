@@ -3,6 +3,7 @@
 ======================================== */
 
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
 
 * {
 	box-sizing: border-box;
@@ -14,7 +15,7 @@ html, body {
 }
 
 body {
-    font-family: "Nunito", sans-serif;
+    font-family: "Oswald", sans-serif;
     text-align: center;
     background: rgba(235, 235, 235, 0.9);
 }
@@ -140,7 +141,7 @@ header h1 {
     min-height: 415px;
     margin: 10px auto auto;
     padding-bottom: 15px;
-    background: rgba(255, 255, 255, 1);
+    background: rgb(255, 204, 102);
     border-radius: 0.25em;
     border: 1px solid rgba(100, 100, 100, 0.3);
     transition: .4s ease-out;
@@ -188,7 +189,7 @@ header h1 {
     max-width: 420px;
     padding: 10px 15px 15px;;
     margin: 10px auto auto;
-    background: rgba(255, 255, 255, 1);
+    background: rgb(255, 204, 102);
     border-radius: 0.25em;
     border: 1px solid rgba(100, 100, 100, 0.3);
 }

@@ -18,19 +18,20 @@ Helper method used to post user information div to the dom
 @Param user {object} a  user object containining user information, contained in our user Array
 */
 const displayUserData = (user) => {
-  const gallery = document.querySelector('.gallery');
-  const html = `
-  <div class="card">
-    <div class="card-img-container">
-        <img class="card-img" src="${user.picture.large}" alt="profile picture">
-    </div>
-    <div class="card-info-container">
-        <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
-        <p class="card-text">${user.email}</p>
-        <p class="card-text cap">${user.location.city} ${user.location.state}</p>
-    </div>
-  </div>`
-  gallery.insertAdjacentHTML('beforeend', html);
+    const gallery = document.querySelector('.gallery');
+    const html = `
+    <div class="card">
+      <div class="card-img-container">
+          <img class="card-img" src="${user.picture.large}" alt="profile picture">
+      </div>
+      <div class="card-info-container">
+          <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
+          <p class="card-text">${user.email}</p>
+          <p class="card-text cap">${user.location.city} ${user.location.state}</p>
+      </div>
+    </div>`
+    gallery.insertAdjacentHTML('beforeend', html);
+  
 }
 
 /*
@@ -124,6 +125,7 @@ const modelButtonListeners = () => {
       const thisuserEmail = (document.querySelector('.modal-text').textContent);
       users.forEach((user, index) => {
         if (user.email === thisuserEmail) {
+          currentIndex = index + 1;
           document.querySelector('.modal-container').remove();
           setUpModal(users[index + 1]);
           }
@@ -170,6 +172,7 @@ const pageSetUp = () => {
 Our search method, sorts through the employee by name return only the results if they match, also adding the model and event listeners to our new data set
 */
 const search = () => {
+  document.querySelector('.gallery');
   const searchBar = document.querySelector('.search-input');
   const searchButton = document.querySelector('.search-submit');
   const userSearch = () => {
