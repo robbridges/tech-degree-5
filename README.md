@@ -5,6 +5,6 @@ In this fifth tech degree project I updated three CUS values.
 
 I also changed the background color of the overall project to a light blue color. 
 
-When the models are open the backfround is a light blue color.
+When the models are open the background is a light blue color.
 
 I also imported the google font 'Oswald' and set the font in the project to that font. 
