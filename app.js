@@ -11,7 +11,6 @@ const getUsers = async () => {
     .catch(error => console.log(`There was an error, please see the error below \n ${error.message}`));
   users.forEach(user =>displayUserData(user));
   pageSetUp();
-  
 }
 /*
 Helper method used to post user information div to the dom
@@ -37,7 +36,6 @@ const displayUserData = (user, ) => {
       </div>
     </div>`
     gallery.insertAdjacentHTML('beforeend', html);
-  
 }
 
 /*
