@@ -17,8 +17,14 @@ const getUsers = async () => {
 Helper method used to post user information div to the dom
 @Param user {object} a  user object containining user information, contained in our user Array
 */
-const displayUserData = (user) => {
+const displayUserData = (user, ) => {
+    const noUserDiv = document.createElement('div');
     const gallery = document.querySelector('.gallery');
+    noUserDiv.className = 'no-users';
+    const noUserHTML = `<div>Sorry, there are no users to display </div>`;
+    noUserDiv.insertAdjacentHTML('beforeend', noUserHTML);
+    noUserDiv.setAttribute('hidden', true);
+    gallery.appendChild(noUserDiv);
     const html = `
     <div class="card">
       <div class="card-img-container">
@@ -106,7 +112,7 @@ const phoneFormatter = (phone) => {
 }
 
 /*
-Sets up event listeners for all modal objects, we call this method after the modal has been created
+Sets up event listeners for all modal objects, we call this method after the modal has been created so that all models gain the features
 */
 const modelButtonListeners = () => {
   
@@ -148,7 +154,9 @@ const modelButtonListeners = () => {
   })
 
 }
-
+/*
+Adds the search bar to the page. 
+*/
 const addSearchBar = () => {
   const searchBar = document.querySelector('.search-container');
   const searchHtml = `
@@ -169,12 +177,19 @@ const pageSetUp = () => {
 
 
 /*
-Our search method, sorts through the employee by name return only the results if they match, also adding the model and event listeners to our new data set
+Our search method, sorts through the employee by name return only the results if they match, also adding the model and event listeners to our new data set.
+It also prints a div to top explaining if no divs are found. 
 */
 const search = () => {
   document.querySelector('.gallery');
   const searchBar = document.querySelector('.search-input');
   const searchButton = document.querySelector('.search-submit');
+  const noUserDiv = document.createElement('div');
+  noUserDiv.className = 'no-users';
+  const noUserHTML = `<div>Sorry, there are no users to display </div>`;
+  noUserDiv.insertAdjacentHTML('beforeend', noUserHTML);
+  noUserDiv.setAttribute('hidden', true);
+  gallery.appendChild(noUserDiv);
   const userSearch = () => {
     const searchText= searchBar.value;
     userArray = [];
@@ -185,7 +200,11 @@ const search = () => {
     })
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => card.remove());
+    if (userArray.length === 0) {
+       noUserDiv.removeAttribute('hidden');
+    }
     userArray.forEach(user => {
+      noUserDiv.setAttribute('hidden', true);
       displayUserData(user);
     });
     applyModals(userArray);
